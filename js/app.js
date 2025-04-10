@@ -47,6 +47,6 @@ http.createServer(function(request, response) {
         </body>
         </html>
     `);
-}).listen(3000, "127.0.0.1", function() {
-    console.log("Сервер начал прослушивание запросов на порту 3000");
+}).listen(process.env.PORT || 3000, "0.0.0.0", function() {
+    console.log("Сервер запущен");
 });
