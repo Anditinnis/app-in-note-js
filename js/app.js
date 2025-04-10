@@ -9,10 +9,9 @@ const options = {
   };
   const time = new Date().toLocaleTimeString('ru-RU', options);
   
-  response.end(`<p>Московское время: ${time}</p>`);
 
 
-  console.log('Часовой пояс сервера:', Intl.DateTimeFormat().resolvedOptions().timeZone);
+
 
 http.createServer(function(request, response) {
     // Устанавливаем заголовок Content-Type для HTML
@@ -56,7 +55,8 @@ http.createServer(function(request, response) {
             <div class="container">
                 <h1>Привет из NodeJS!</h1>
                 <p>Это HTML-страница, сгенерированная сервером</p>
-                <p>Текущее время: ${new Date().toLocaleTimeString()}</p>
+                <p>Текущее время на сервере: ${new Date().toLocaleTimeString()}</p>
+                <p>Московское время: ${time}</p>
             </div>
         </body>
         </html>
