@@ -1,30 +1,17 @@
 const http = require("http");
 
-// Для московского времени (UTC+3)
-const options = { 
-    timeZone: 'Europe/Moscow',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  };
-  const time = new Date().toLocaleTimeString('ru-RU', options);
-  
-
-
-
-
 http.createServer(function(request, response) {
-    // Устанавливаем заголовок Content-Type для HTML
-    response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
+    response.writeHead(200, {
+        "Content-Type": "text/html; charset=utf-8"
+    });
     
-    // Отправляем HTML-страницу
     response.end(`
         <!DOCTYPE html>
         <html lang="ru">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>NodeJS Server</title>
+            <title>Текущее время</title>
             <style>
                 body {
                     font-family: Arial, sans-serif;
@@ -46,21 +33,43 @@ http.createServer(function(request, response) {
                 h1 {
                     color: #2c3e50;
                 }
-                p {
-                    color: #7f8c8d;
+                #live-time {
+                    font-size: 24px;
+                    color: #4CAF50;
+                    margin: 20px 0;
+                    font-weight: bold;
                 }
             </style>
         </head>
         <body>
             <div class="container">
-                <h1>Привет из NodeJS!</h1>
-                <p>Это HTML-страница, сгенерированная сервером</p>
-                <p>Текущее время на сервере: ${new Date().toLocaleTimeString()}</p>
-                <p>Московское время: ${time}</p>
+                <h1>Текущее московское время</h1>
+                <div id="live-time"></div>
+                <p>Сервер Node.js в реальном времени</p>
             </div>
+
+            <script>
+                function updateTime() {
+                    const options = { 
+                        timeZone: 'Europe/Moscow',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false
+                    };
+                    const time = new Date().toLocaleTimeString('ru-RU', options);
+                    document.getElementById('live-time').textContent = time;
+                }
+                
+                // Обновляем время сразу при загрузке
+                updateTime();
+                
+                // И каждую секунду
+                setInterval(updateTime, 1000);
+            </script>
         </body>
         </html>
     `);
-}).listen(process.env.PORT || 3000, "0.0.0.0", function() {
-    console.log("Сервер запущен");
+}).listen(3000, "0.0.0.0", function() {
+    console.log("Сервер запущен на http://localhost:3000");
 });
