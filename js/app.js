@@ -1,5 +1,19 @@
 const http = require("http");
 
+// Для московского времени (UTC+3)
+const options = { 
+    timeZone: 'Europe/Moscow',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  };
+  const time = new Date().toLocaleTimeString('ru-RU', options);
+  
+  response.end(`<p>Московское время: ${time}</p>`);
+
+
+  console.log('Часовой пояс сервера:', Intl.DateTimeFormat().resolvedOptions().timeZone);
+
 http.createServer(function(request, response) {
     // Устанавливаем заголовок Content-Type для HTML
     response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
